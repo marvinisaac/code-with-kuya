@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+./cmd/build
+
+source .env
+export DOCKER_NETWORK \
+    DOCKER_PUBLIC_URL
+
+docker stop ${PWD##*/}
+
+docker rm ${PWD##*/}
+
+docker run -d \
+    -e VIRTUAL_HOST=$DOCKER_PUBLIC_URL \
+    -v $PWD/dist:/usr/share/nginx/html \
+    -v $PWD/site.conf:/etc/nginx/conf.d/site.conf \
+    --name ${PWD##*/} \
+    --network $DOCKER_NETWORK \
+    --restart always \
+    nginx:alpine

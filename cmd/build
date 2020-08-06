@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+echo "Installing dependencies..."
+sleep 1
+
+sudo rm -rf node_modules
+./cmd/npm install
+
+echo "Building project..."
+sleep 1
+
+# Get current version from VERSION.MD
+VERSION=$(head -n 1 VERSION.MD)
+# Replace VUE_APP_VERSION line
+sed -i "/VUE_APP_VERSION=/c\VUE_APP_VERSION=$VERSION" ./.env
+./cmd/npm run build
+sudo rm -rf node_modules
+
+echo 'Done!'

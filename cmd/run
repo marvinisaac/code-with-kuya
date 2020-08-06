@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+function setup()
+{
+    echo '>>> Setting up...'
+
+    source .env
+    export DOCKER_NETWORK \
+        DOCKER_PUBLIC_URL
+}
+
+function run()
+{
+    echo '>>> Running...'
+
+    docker run -d \
+        -e VIRTUAL_HOST=$DOCKER_PUBLIC_URL \
+        -v $PWD/dist:/usr/share/nginx/html \
+        -v $PWD/site.conf:/etc/nginx/conf.d/site.conf \
+        --name ${PWD##*/}-nginx \
+        --network $DOCKER_NETWORK \
+        nginx:alpine
+
+    docker run \
+        -v $PWD:/usr/src/app \
+        -w /usr/src/app \
+        --name ${PWD##*/}-node \
+        --network $DOCKER_NETWORK \
+        node:lts-alpine \
+        npm run serve
+}
+
+function cleanup()
+{
+    echo '>>> Cleaning up...'
+    docker stop ${PWD##*/}-nginx
+    docker stop ${PWD##*/}-node
+
+    docker rm ${PWD##*/}-nginx
+    docker rm ${PWD##*/}-node
+    echo '>>> Cleanup done. Have a great day!'
+}
+
+setup
+run
+
+trap cleanup EXIT SIGINT
