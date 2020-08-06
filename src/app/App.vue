@@ -52,7 +52,8 @@ export default {
                 let title = slugify(post.title, slugOptions)
                 titleMap[title] = {
                     id: post.id,
-                    featuredImage: this._getCdnLink(post.featured_image)
+                    featuredImage: this._getCdnLink(post.featured_image),
+                    title: post.title
                 }
             })
 

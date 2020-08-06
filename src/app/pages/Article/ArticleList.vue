@@ -1,5 +1,5 @@
 <template>
-    <div class="container-home">
+    <div class="container-article-list">
         <div class="container">
             <h1 class="title">Home</h1>
         </div>
@@ -7,7 +7,7 @@
 </template>
 
 <style lang="scss" scoped>
-.container-home {
+.container-article-list {
     width: 100%;
 }
 </style>
