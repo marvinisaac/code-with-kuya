@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import ArticleListCard from './ArticleListCard.vue'
-import Loading from './../../partials/Loading.vue'
+import ArticleListCard from './ListCard.vue'
+import Loading from './../../../partials/Loading.vue'
 
 export default {
     components: {

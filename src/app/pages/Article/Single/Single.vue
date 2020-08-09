@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import Loading from './../../partials/Loading.vue'
-import NotFound from './../../partials/NotFound.vue'
+import Loading from './../../../partials/Loading.vue'
+import NotFound from './../../../partials/NotFound.vue'
 
 export default {
     components: {

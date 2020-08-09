@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import ArticleList from './../pages/Article/ArticleList.vue'
-import ArticleSingle from './../pages/Article/ArticleSingle.vue'
+import ArticleList from './../pages/Article/List/List.vue'
+import ArticleSingle from './../pages/Article/Single/Single.vue'
 
 Vue.use(VueRouter)
 
