@@ -5,12 +5,14 @@
                 :message="`Wait lang...`">
             </loading>
 
-            <article-list-card
-                v-for="(post, index) in postList"
-                :key="index"
-                :post="post"
-                :postTitleSlug="index">
-            </article-list-card>
+            <div class="container-list">
+                <article-list-card
+                    v-for="(post, index) in postList"
+                    :key="index"
+                    :post="post"
+                    :postTitleSlug="index">
+                </article-list-card>
+            </div>
         </div>
     </div>
 </template>
@@ -35,7 +37,14 @@ export default {
 <style lang="scss" scoped>
 .container-article-list {
     margin-bottom: auto;
-    padding: 1.5rem;
     width: 100%;
+
+    .container {
+        padding: 1.5rem;
+
+        .container-list {
+            max-width: 640px;
+        }
+    }
 }
 </style>

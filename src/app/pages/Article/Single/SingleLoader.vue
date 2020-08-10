@@ -1,6 +1,6 @@
 <template>
     <div class="container-article-single-loader">
-        <div class="post-header"
+        <div class="post-head"
             v-if="post !== undefined"
             :style="`background-image: url('${post.featuredImage}')`">
         </div>
@@ -10,7 +10,7 @@
                 :message="`Loading ${postTitle}...`">
             </loading>
 
-            <template v-if="post !== undefined">
+            <div class="post-body" v-if="post !== undefined">
                 <h1 class="title">
                     {{ post.title }}
                 </h1>
@@ -31,7 +31,7 @@
                 <div class="content"
                     v-html="post.body">
                 </div>
-            </template>
+            </div>
         </div>
     </div>
 </template>
@@ -146,40 +146,43 @@ $solarized-light: #fff9eb;
 .container-article-single-loader {
     width: 100%;
 
-    .post-header {
+    .post-head {
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
+        margin-bottom: 1.5rem;
         padding-top: 56.25%;
         width: 100%;
     }
 
     .container {
-        padding: 1.5rem;
+        padding: 0 1.5rem 1.5rem;
 
-        .title {
-            line-height: 1.25em;
-        }
-
-        .subtitle {
-            line-height: 1.25em;
-
-            span + span {
-                border-left: 1px solid grey;
-                margin-left: 0.75rem;
-                padding-left: 0.75rem;
-            }
-        }
-
-        .content {
+        .post-body {
             max-width: 720px;
 
-            /deep/ {
-                pre {
-                    background: $solarized-light;
-                    border-radius: 5px;
-                    margin-bottom: 2rem;
-                    margin-top: 2rem;
+            .title {
+                line-height: 1.25em;
+            }
+
+            .subtitle {
+                line-height: 1.25em;
+
+                span + span {
+                    border-left: 1px solid grey;
+                    margin-left: 0.75rem;
+                    padding-left: 0.75rem;
+                }
+            }
+
+            .content {
+                /deep/ {
+                    pre {
+                        background: $solarized-light;
+                        border-radius: 5px;
+                        margin-bottom: 2rem;
+                        margin-top: 2rem;
+                    }
                 }
             }
         }
@@ -188,7 +191,7 @@ $solarized-light: #fff9eb;
 
 @media (min-width: 769px) {
 .container-article-single-loader {
-    .post-header {
+    .post-head {
         padding-top: 33.33vh;
     }
 }}

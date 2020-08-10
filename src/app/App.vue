@@ -36,7 +36,8 @@ export default {
                 fields: [
                     'id',
                     'title',
-                    'featured_image.filename_disk'
+                    'featured_image.filename_disk',
+                    'blurb'
                 ],
                 sort: '-published_on'
             }
@@ -58,7 +59,8 @@ export default {
                 titleMap[title] = {
                     id: post.id,
                     featuredImage: this._getCdnLink(post.featured_image),
-                    title: post.title
+                    title: post.title,
+                    blurb: post.blurb
                 }
             })
 
@@ -78,6 +80,6 @@ export default {
 
 <style lang="scss" scoped>
 .hero-body {
-    padding: 0;
+    padding: 3.25rem 0 0;
 }
 </style>
