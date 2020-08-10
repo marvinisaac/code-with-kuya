@@ -1,5 +1,6 @@
 <template>
     <div class="hero is-fullheight">
+        <navigation class="hero-head"></navigation>
         <main class="hero-body">
             <router-view></router-view>
         </main>
@@ -9,8 +10,12 @@
 <script>
 import DirectusSDK from '@directus/sdk-js'
 import slugify from 'slugify'
+import Navigation from './components/Navigation.vue'
 
 export default {
+    components: {
+        Navigation
+    },
     data: () => ({
         api: undefined,
         cdnUrl: process.env.VUE_APP_CDN_URL,
