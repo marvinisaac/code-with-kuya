@@ -1,14 +1,37 @@
 <template>
-    <div class="container-article-single-display">
+    <div class="container-article-single-loader">
+        <div class="post-header"
+            v-if="post !== undefined"
+            :style="`background-image: url('${post.featuredImage}')`">
+        </div>
+
         <div class="container">
             <loading v-if="post === undefined"
                 :message="`Loading ${postTitle}...`">
             </loading>
 
-            <div class="content"
-                v-if="post !== undefined"
-                v-html="post.body">
-            </div>
+            <template v-if="post !== undefined">
+                <h1 class="title">
+                    {{ post.title }}
+                </h1>
+
+                <p class="subtitle">
+                    {{ post.blurb }}
+                    <br/>
+                    <span class="is-size-7"
+                        v-if="isUpdated">
+                        Updated: {{ post.modified_on }}
+                    </span>
+
+                    <span class="is-size-7">
+                        Published: {{ post.published_on }}
+                    </span>
+                </p>
+
+                <div class="content"
+                    v-html="post.body">
+                </div>
+            </template>
         </div>
     </div>
 </template>
@@ -18,6 +41,7 @@ import DirectusSDK from '@directus/sdk-js'
 import Loading from './../../../partials/Loading.vue'
 import marked from 'marked'
 import highlighter from 'highlight.js'
+import moment from 'moment'
 
 export default {
     components: {
@@ -32,9 +56,15 @@ export default {
         cdnUrl: process.env.VUE_APP_CDN_URL,
         cmsUrl: process.env.VUE_APP_CMS_URL,
         collection: process.env.VUE_APP_CMS_PROJECT_COLLECTION,
+        domParser: new DOMParser(),
         post: undefined,
         project: process.env.VUE_APP_CMS_PROJECT
     }),
+    computed: {
+        isUpdated () {
+            return moment(this.post.modified_on) > moment(this.post.published_on)
+        }
+    },
     async created () {
         this.api = new DirectusSDK({
             url: this.cmsUrl,
@@ -49,7 +79,10 @@ export default {
                     'id',
                     'title',
                     'featured_image.filename_disk',
-                    'body'
+                    'body',
+                    'published_on',
+                    'modified_on',
+                    'blurb'
                 ],
                 filter: {
                     id: this.postId
@@ -61,13 +94,16 @@ export default {
                     let body = await this._formatBody(post.body)
                     this.post = post
                     this.post.body = body
+                    this.post.published_on = moment(post.published_on).format('YYYY MMM DD')
+                    this.post.modified_on = moment(post.modified_on).format('YYYY MMM DD')
+                    this.post.featuredImage = `${this.cdnUrl}/cms/${this.project}/originals/${post.featured_image.filename_disk}`
                 })
         },
         async _formatBody (body) {
             const markdown = marked(body)
 
-            const domParser = new DOMParser()
-            let dom = domParser.parseFromString(markdown, 'text/html')
+            let dom = this.domParser.parseFromString(markdown, 'text/html')
+            dom = this._imageFromCdn(dom)
             dom = this._highlightCode(dom)
             dom = this._linkNewTab(dom)
 
@@ -85,11 +121,17 @@ export default {
         _highlightCode (dom) {
             let codes = dom.getElementsByTagName('code')
             for (let code of codes) {
-                const domParser = new DOMParser()
-                console.log(code.innerText)
                 const highlighted = highlighter.highlightAuto(code.innerText).value
-                let dom = domParser.parseFromString(highlighted, 'text/html')
+                let dom = this.domParser.parseFromString(highlighted, 'text/html')
                 code.innerHTML = dom.body.innerHTML
+            }
+
+            return dom
+        },
+        _imageFromCdn (dom) {
+            let images = dom.getElementsByTagName('img')
+            for (let image of images) {
+                image.src = image.src.replace('cdn://', `${this.cdnUrl}/cms/${this.project}/originals/`)
             }
 
             return dom
@@ -102,24 +144,52 @@ export default {
 $solarized-light: #fff9eb;
 
 .container-article-single-loader {
-    padding: 1.5rem;
     width: 100%;
 
-    .content {
-        max-width: 720px;
+    .post-header {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding-top: 56.25%;
+        width: 100%;
+    }
 
-        /deep/ {
-            pre {
-                background: $solarized-light;
-                border-radius: 5px;
-                margin-bottom: 2rem;
-                margin-top: 2rem;
+    .container {
+        padding: 1.5rem;
 
-                code {
-                    font-family: monospace;
+        .title {
+            line-height: 1.25em;
+        }
+
+        .subtitle {
+            line-height: 1.25em;
+
+            span + span {
+                border-left: 1px solid grey;
+                margin-left: 0.75rem;
+                padding-left: 0.75rem;
+            }
+        }
+
+        .content {
+            max-width: 720px;
+
+            /deep/ {
+                pre {
+                    background: $solarized-light;
+                    border-radius: 5px;
+                    margin-bottom: 2rem;
+                    margin-top: 2rem;
                 }
             }
         }
     }
 }
+
+@media (min-width: 769px) {
+.container-article-single-loader {
+    .post-header {
+        padding-top: 33.33vh;
+    }
+}}
 </style>

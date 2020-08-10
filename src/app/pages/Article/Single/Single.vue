@@ -1,19 +1,17 @@
 <template>
     <div class="container-article-single">
-        <div class="container">
-            <loading v-if="this.postList === undefined"
-                :message="`Wait lang...`">
-            </loading>
+        <loading v-if="this.postList === undefined"
+            :message="`Wait lang...`">
+        </loading>
 
-            <not-found v-if="isPostNotFound"
-                :page="title">
-            </not-found>
+        <not-found v-if="isPostNotFound"
+            :page="title">
+        </not-found>
 
-            <article-content v-if="isPostFound"
-                :post-id="post.id"
-                :post-title="post.title">
-            </article-content>
-        </div>
+        <article-content v-if="isPostFound"
+            :post-id="post.id"
+            :post-title="post.title">
+        </article-content>
     </div>
 </template>
 
