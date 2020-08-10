@@ -7,9 +7,10 @@
 
             <not-found v-if="isPostNotFound" />
 
-            <loading v-if="isPostFound"
-                :message="`Loading ${post.title}...`">
-            </loading>
+            <article-content v-if="isPostFound"
+                :post-id="post.id"
+                :post-title="post.title">
+            </article-content>
         </div>
     </div>
 </template>
@@ -17,11 +18,13 @@
 <script>
 import Loading from './../../../partials/Loading.vue'
 import NotFound from './../../../partials/NotFound.vue'
+import ArticleContent from './SingleLoader.vue'
 
 export default {
     components: {
         Loading,
-        NotFound
+        NotFound,
+        ArticleContent
     },
     props: {
         title: String
