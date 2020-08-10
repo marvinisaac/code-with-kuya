@@ -17,6 +17,7 @@
 import DirectusSDK from '@directus/sdk-js'
 import Loading from './../../../partials/Loading.vue'
 import marked from 'marked'
+import highlighter from 'highlight.js'
 
 export default {
     components: {
@@ -67,31 +68,28 @@ export default {
 
             const domParser = new DOMParser()
             let dom = domParser.parseFromString(markdown, 'text/html')
-            dom = await this._embedGithubCode(dom)
+            dom = this._highlightCode(dom)
             dom = this._linkNewTab(dom)
 
             // Stringify body of temporary DOM
             return dom.body.innerHTML
         },
-        async _embedGithubCode (dom) {
-            let githubLinks = dom.getElementsByTagName('code')
-            for (let link of githubLinks) {
-                if (link.innerText.indexOf('http://') === -1 &&
-                    link.innerText.indexOf('https://') === -1) {
-                    continue
-                }
-
-                link.innerText = await fetch(link.innerText)
-                    .then(response => response.text())
-                    .then(response => response)
-            }
-
-            return dom
-        },
         _linkNewTab (dom) {
             let links = dom.getElementsByTagName('a')
             for (let link of links) {
                 link.target = '_blank'
+            }
+
+            return dom
+        },
+        _highlightCode (dom) {
+            let codes = dom.getElementsByTagName('code')
+            for (let code of codes) {
+                const domParser = new DOMParser()
+                console.log(code.innerText)
+                const highlighted = highlighter.highlightAuto(code.innerText).value
+                let dom = domParser.parseFromString(highlighted, 'text/html')
+                code.innerHTML = dom.body.innerHTML
             }
 
             return dom
@@ -101,32 +99,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container-article-single-display {
+$solarized-light: #fff9eb;
+
+.container-article-single-loader {
     padding: 1.5rem;
     width: 100%;
 
     .content {
+        max-width: 720px;
+
         /deep/ {
             pre {
-                border: 1px solid grey;
-                border-radius: 5px 5px 0 0;
-                margin-bottom: 0;
+                background: $solarized-light;
+                border-radius: 5px;
+                margin-bottom: 2rem;
                 margin-top: 2rem;
 
                 code {
                     font-family: monospace;
                 }
-            }
-
-            pre + p {
-                background: white;
-                border: 1px solid grey;
-                border-radius: 0 0 5px 5px;
-                border-width: 0 1px 1px;
-                font-size: 0.75rem;
-                margin-top: -1px;
-                margin-bottom: 2rem;
-                padding: 0.5em 1em;
             }
         }
     }
