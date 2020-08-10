@@ -34,6 +34,8 @@ export default {
 
 <style lang="scss" scoped>
 .container-article-list {
+    margin-bottom: auto;
+    padding: 1.5rem;
     width: 100%;
 }
 </style>

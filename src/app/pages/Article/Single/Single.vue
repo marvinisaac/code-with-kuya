@@ -5,7 +5,9 @@
                 :message="`Wait lang...`">
             </loading>
 
-            <not-found v-if="isPostNotFound" />
+            <not-found v-if="isPostNotFound"
+                :page="title">
+            </not-found>
 
             <article-content v-if="isPostFound"
                 :post-id="post.id"
@@ -50,6 +52,7 @@ export default {
 
 <style lang="scss" scoped>
 .container-article-single {
+    margin-bottom: auto;
     width: 100%;
 }
 </style>
