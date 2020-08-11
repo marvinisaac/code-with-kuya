@@ -147,7 +147,8 @@ $solarized-light: #fff9eb;
     width: 100%;
 
     .post-head {
-        background-position: center;
+        background-attachment: fixed;
+        background-position: top center;
         background-repeat: no-repeat;
         background-size: cover;
         margin-bottom: 1.5rem;
@@ -177,11 +178,18 @@ $solarized-light: #fff9eb;
 
             .content {
                 /deep/ {
+                    img {
+                        border: 1px solid rgba(10, 10, 10, 0.1);
+                        border-radius: 5px;
+                    }
+
                     pre {
                         background: $solarized-light;
                         border-radius: 5px;
-                        margin-bottom: 2rem;
-                        margin-top: 2rem;
+                    }
+
+                    ul {
+                        margin-left: 1em;
                     }
                 }
             }
