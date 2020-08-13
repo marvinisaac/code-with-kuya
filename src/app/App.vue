@@ -34,6 +34,11 @@ export default {
                     'featured_image.filename_disk',
                     'blurb'
                 ],
+                filter: {
+                    published_on: {
+                        lt: 'now'
+                    }
+                },
                 sort: '-published_on'
             }
             return this.$cms.getItems(this.collection, options)
