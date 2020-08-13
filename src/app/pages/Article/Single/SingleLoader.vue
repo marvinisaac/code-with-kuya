@@ -114,9 +114,10 @@ export default {
             return dom
         },
         _highlightCode (dom) {
-            let codes = dom.getElementsByTagName('code')
+            let codes = dom.getElementsByTagName('pre')
             for (let code of codes) {
-                const highlighted = highlighter.highlightAuto(code.innerText).value
+                let language = this._getLanguage(code)
+                const highlighted = highlighter.highlight(language, code.firstChild.innerText).value
                 let dom = this.domParser.parseFromString(highlighted, 'text/html')
                 code.innerHTML = dom.body.innerHTML
             }
@@ -130,6 +131,12 @@ export default {
             }
 
             return dom
+        },
+        _getLanguage (code) {
+            const languageContainer = code.previousSibling.previousSibling
+            const language = languageContainer.firstChild.nextSibling.innerText
+            languageContainer.remove()
+            return language
         }
     }
 }
