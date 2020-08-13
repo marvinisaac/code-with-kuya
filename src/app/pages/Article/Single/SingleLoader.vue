@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import DirectusSDK from '@directus/sdk-js'
 import Loading from './../../../partials/Loading.vue'
 import marked from 'marked'
 import highlighter from 'highlight.js'
@@ -66,10 +65,6 @@ export default {
         }
     },
     async created () {
-        this.api = new DirectusSDK({
-            url: this.cmsUrl,
-            project: this.project
-        })
         await this.getPost()
     },
     methods: {
@@ -88,7 +83,7 @@ export default {
                     id: this.postId
                 }
             }
-            return this.api.getItems(this.collection, options)
+            return this.$cms.getItems(this.collection, options)
                 .then(async (post) => {
                     post = post.data[0]
                     let body = await this._formatBody(post.body)

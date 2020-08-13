@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import DirectusSDK from '@directus/sdk-js'
 import slugify from 'slugify'
 import Navigation from './components/Navigation.vue'
 
@@ -24,10 +23,6 @@ export default {
         project: process.env.VUE_APP_CMS_PROJECT
     }),
     async created () {
-        this.api = new DirectusSDK({
-            url: this.cmsUrl,
-            project: this.project
-        })
         await this.getPostList()
     },
     methods: {
@@ -41,7 +36,7 @@ export default {
                 ],
                 sort: '-published_on'
             }
-            return this.api.getItems(this.collection, options)
+            return this.$cms.getItems(this.collection, options)
                 .then((posts) => {
                     let postList = this._buildTitleMap(posts.data)
                     this.$store.commit('setPostList', postList)
