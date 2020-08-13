@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import ArticleList from './../pages/Article/List/List.vue'
 import ArticleSingle from './../pages/Article/Single/Single.vue'
+import Login from './../pages/Login.vue'
 
 Vue.use(VueRouter)
 
@@ -9,6 +10,9 @@ const routes = [
     {
         path: '/',
         component: ArticleList
+    }, {
+        path: '/login',
+        component: Login
     }, {
         path: '/:title?',
         props: true,

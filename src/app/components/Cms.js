@@ -5,7 +5,9 @@ const url = process.env.VUE_APP_CMS_URL
 
 const cms = new Directus({
     url,
-    project
+    project,
+    persist: true,
+    storage: window.localStorage
 })
 
 export default cms
