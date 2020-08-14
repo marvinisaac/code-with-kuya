@@ -15,7 +15,12 @@ export default {
 
 <style lang="scss" scoped>
 .loading-container {
+    background: transparent;
     display: flex;
     flex-direction: column;
+
+    .is-white {
+        background: transparent;
+    }
 }
 </style>

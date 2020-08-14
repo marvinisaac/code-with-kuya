@@ -1,7 +1,13 @@
 <template>
-    <div class="container-article-single-loader">
+    <div class="container-article-single-loader"
+        :class="{
+            'is-transparent': post === undefined
+        }">
         <div class="post-head"
             v-if="post !== undefined"
+            :class="{
+                'is-default': isDefaultHeader
+            }"
             :style="`background-image: url('${post.featuredImage}')`">
         </div>
 
@@ -62,6 +68,19 @@ export default {
     computed: {
         isUpdated () {
             return moment(this.post.modified_on) > moment(this.post.published_on)
+        },
+        isDefaultHeader () {
+            const imageDefault = 'marvinisaac-com/facebook-share.jpg'
+            return this.featuredImage === `${this.cdnUrl}/${imageDefault}`
+        },
+        featuredImage () {
+            let post = this.post
+            if (post.featured_image === null) {
+                const imageDefault = 'marvinisaac-com/facebook-share.jpg'
+                return `${this.cdnUrl}/${imageDefault}`
+            }
+
+            return `${this.cdnUrl}/cms/${this.project}/originals/${post.featured_image.filename_disk}`
         }
     },
     async created () {
@@ -91,7 +110,7 @@ export default {
                     this.post.body = body
                     this.post.published_on = moment(post.published_on).format('YYYY MMM DD')
                     this.post.modified_on = moment(post.modified_on).format('YYYY MMM DD')
-                    this.post.featuredImage = `${this.cdnUrl}/cms/${this.project}/originals/${post.featured_image.filename_disk}`
+                    this.post.featuredImage = this.featuredImage
                 })
         },
         async _formatBody (body) {
@@ -144,9 +163,16 @@ export default {
 
 <style lang="scss" scoped>
 $solarized-light: #fff9eb;
+$dark-grey: #dbdbdb;
 
 .container-article-single-loader {
+    background: white;
+    font-size: 14px;
     width: 100%;
+
+    &.is-transparent {
+        background: transparent !important;
+    }
 
     .post-head {
         background-attachment: fixed;
@@ -156,6 +182,11 @@ $solarized-light: #fff9eb;
         margin-bottom: 1.5rem;
         padding-top: 56.25%;
         width: 100%;
+    }
+
+    .post-head.is-default {
+        background-attachment: initial;
+        background-position: center;
     }
 
     .container {
@@ -180,18 +211,67 @@ $solarized-light: #fff9eb;
 
             .content {
                 /deep/ {
-                    img {
-                        border: 1px solid rgba(10, 10, 10, 0.1);
+                    blockquote {
+                        border: 1px solid $dark-grey;
                         border-radius: 5px;
+                        font-size: 0.875em;
+                        overflow: hidden;
+                        padding-top: 0;
+
+                        p:first-of-type {
+                            background: $dark-grey;
+                            font-weight: bolder;
+                            margin-left: -1.75em;
+                            margin-right: -1.75em;
+                            padding: 0.5em 1.75em;
+                            text-transform: uppercase;
+                        }
+
+                        p {
+                            code {
+                                background: white;
+                                border-color: $dark-grey;
+                            }
+                        }
+
+                        ul {
+                            margin-left: 2em;
+                        }
+                    }
+
+                    hr {
+                        background-color: $dark-grey;
+                    }
+
+                    h3 {
+                        font-weight: normal;
+                    }
+
+                    img {
+                        border: 1px solid $dark-grey;
+                        border-radius: 5px;
+                        display: block;
+                        margin: 0 auto;
+                    }
+
+                    p {
+                        code {
+                            background: $solarized-light;
+                            border: 1px solid darken($solarized-light, 10%);
+                            border-radius: 3px;
+                            color: black;
+                            padding: 0 0.25em;
+                        }
                     }
 
                     pre {
                         background: $solarized-light;
+                        border: 1px solid darken($solarized-light, 10%);
                         border-radius: 5px;
                     }
 
                     ul {
-                        margin-left: 1em;
+                        margin-left: 2em;
                     }
                 }
             }
@@ -199,8 +279,10 @@ $solarized-light: #fff9eb;
     }
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1024px) {
 .container-article-single-loader {
+    font-size: 16px;
+
     .post-head {
         padding-top: 33.33vh;
     }

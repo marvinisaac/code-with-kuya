@@ -8,6 +8,7 @@ $family-monospace: 'Roboto Mono', monospace;
 @import '../../node_modules/highlight.js/styles/solarized-light.css';
 
 html {
+    background: rgba(10, 10, 10, 0.03);
     min-height: 100vh;
     overflow-y: auto;
     width: 100%;
