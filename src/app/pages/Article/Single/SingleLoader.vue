@@ -96,7 +96,7 @@ export default {
     }),
     computed: {
         isUpdated () {
-            return moment(this.post.modified_on) > moment(this.post.published_on)
+            return moment(this.post.modified_on, 'YYYY MMM DD') > moment(this.post.published_on, 'YYYY MMM DD')
         },
         featuredImage () {
             let post = this.post
