@@ -3,14 +3,6 @@
         :class="{
             'is-transparent': post === undefined
         }">
-        <div class="post-head"
-            v-if="post !== undefined"
-            :class="{
-                'is-default': isDefaultHeader
-            }"
-            :style="`background-image: url('${post.featuredImage}')`">
-        </div>
-
         <div class="container">
             <loading v-if="post === undefined"
                 :message="`Loading ${postTitle}...`">
@@ -68,10 +60,6 @@ export default {
     computed: {
         isUpdated () {
             return moment(this.post.modified_on) > moment(this.post.published_on)
-        },
-        isDefaultHeader () {
-            const imageDefault = 'marvinisaac-com/facebook-share.jpg'
-            return this.featuredImage === `${this.cdnUrl}/${imageDefault}`
         },
         featuredImage () {
             let post = this.post
@@ -174,21 +162,6 @@ $dark-grey: #dbdbdb;
         background: transparent !important;
     }
 
-    .post-head {
-        background-attachment: fixed;
-        background-position: top center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        margin-bottom: 1.5rem;
-        padding-top: 56.25%;
-        width: 100%;
-    }
-
-    .post-head.is-default {
-        background-attachment: initial;
-        background-position: center;
-    }
-
     .container {
         padding: 0 1.5rem 1.5rem;
 
@@ -282,9 +255,5 @@ $dark-grey: #dbdbdb;
 @media (min-width: 1024px) {
 .container-article-single-loader {
     font-size: 16px;
-
-    .post-head {
-        padding-top: 33.33vh;
-    }
 }}
 </style>
