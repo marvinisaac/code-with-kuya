@@ -2,7 +2,9 @@
     <div class="box">
         <router-link :to="`/${postTitleSlug}`">
             <figure class="image">
-                <img :src="post.featuredImage">
+                <img loading="lazy"
+                    :src="post.featuredImage"
+                    :alt="`${post.title} Image`">
             </figure>
             <div class="content">
                 <h1 class="title">

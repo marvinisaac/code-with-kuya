@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="navbar-brand">
                     <a class="navbar-item has-text-weight" href="/">
-                        <img id="logo" src="/assets/images/logo.png">
+                        <img id="logo" src="/assets/images/logo.png" alt="Marvin Isaac Logo">
                     </a>
                 </div>
             </div>

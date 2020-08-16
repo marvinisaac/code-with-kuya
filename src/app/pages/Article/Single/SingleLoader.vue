@@ -171,6 +171,7 @@ export default {
         _imageFromCdn (dom) {
             let images = dom.getElementsByTagName('img')
             for (let image of images) {
+                image.loading = 'lazy'
                 image.src = image.src.replace('cdn://', `${this.cdnUrl}/cms/${this.project}/originals/`)
             }
 
