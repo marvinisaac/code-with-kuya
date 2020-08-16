@@ -39,8 +39,45 @@ import Loading from './../../../partials/Loading.vue'
 import marked from 'marked'
 import highlighter from 'highlight.js'
 import moment from 'moment'
+import slugify from 'slugify'
 
 export default {
+    metaInfo () {
+        const post = this.post
+
+        if (post === undefined) {
+            return {}
+        }
+
+        const slugOptions = {
+            lower: true,
+            strict: true
+        }
+        const postTitleSlug = slugify(this.post.title, slugOptions)
+        const featuredImage = this.featuredImage
+        return {
+            title: post.title,
+            meta: [
+                {
+                    property: 'og:url',
+                    vmid: 'og:url',
+                    content: `https://${process.env.VUE_APP_PUBLIC_URL}/${postTitleSlug}`
+                }, {
+                    property: 'og:title',
+                    vmid: 'og:title',
+                    content: post.title
+                }, {
+                    property: 'og:description',
+                    vmid: 'og:description',
+                    content: post.blurb
+                }, {
+                    property: 'og:image',
+                    vmid: 'og:image',
+                    content: featuredImage
+                }
+            ]
+        }
+    },
     components: {
         Loading
     },
@@ -163,7 +200,7 @@ $dark-grey: #dbdbdb;
     }
 
     .container {
-        padding: 0 1.5rem 1.5rem;
+        padding: 1.5rem;
 
         .post-body {
             max-width: 720px;

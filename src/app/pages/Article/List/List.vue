@@ -43,6 +43,7 @@ export default {
         padding: 1.5rem;
 
         .container-list {
+            margin: 0 auto;
             max-width: 640px;
         }
     }

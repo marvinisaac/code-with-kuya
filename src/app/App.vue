@@ -12,6 +12,33 @@ import slugify from 'slugify'
 import Navigation from './components/Navigation.vue'
 
 export default {
+    metaInfo: {
+        title: 'Home',
+        titleTemplate: '%s | Code with Kuya Marvin',
+        meta: [
+            {
+                property: 'og:url',
+                vmid: 'og:url',
+                content: `https://${process.env.VUE_APP_PUBLIC_URL}`,
+                template: '%s'
+            }, {
+                property: 'og:title',
+                vmid: 'og:title',
+                content: 'Home',
+                template: '%s | Code with Kuya Marvin'
+            }, {
+                property: 'og:description',
+                vmid: 'og:description',
+                content: 'Para sa mga Filipino na nahihirapan mag-code, gusto pang matuto, o gusto lang ng makakausap tungkol sa web development at iba pa.',
+                template: '%s'
+            }, {
+                property: 'og:image',
+                vmid: 'og:image',
+                content: `${process.env.VUE_APP_CDN_URL}/marvinisaac-com/facebook-share.jpg`,
+                template: '%s'
+            }
+        ]
+    },
     components: {
         Navigation
     },
@@ -36,7 +63,7 @@ export default {
                 ],
                 filter: {
                     published_on: {
-                        lt: 'now'
+                        lte: 'now'
                     }
                 },
                 sort: '-published_on'

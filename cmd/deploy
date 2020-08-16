@@ -4,7 +4,12 @@
 
 source .env
 export DOCKER_NETWORK \
-    DOCKER_PUBLIC_URL
+    DOCKER_PUBLIC_URL \
+    PRERENDER_TOKEN
+
+# Place real token in site.conf
+sed -i "/proxy_set_header X-Prerender-Token/ \
+    c\        proxy_set_header X-Prerender-Token $PRERENDER_TOKEN;" ./site.conf
 
 docker stop ${PWD##*/}
 
