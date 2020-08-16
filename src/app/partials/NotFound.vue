@@ -4,7 +4,7 @@
             Halaaa!
         </h1>
         <div class="content">
-            <p>Hindi ko alam yung page o article na <span>"{{ pageMissing }}"</span> e, sorry!</p>
+            <p>Hindi ko alam yung page o article na <span>"{{ pageMissing }}"</span>, sorry!</p>
         </div>
     </div>
 </template>

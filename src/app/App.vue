@@ -10,6 +10,7 @@
 <script>
 import slugify from 'slugify'
 import Navigation from './components/Navigation.vue'
+import moment from 'moment'
 
 export default {
     metaInfo: {
@@ -54,6 +55,7 @@ export default {
     },
     methods: {
         async getPostList () {
+            const today = moment().format('YYYY-MM-DD 00:00:00')
             const options = {
                 fields: [
                     'id',
@@ -63,7 +65,7 @@ export default {
                 ],
                 filter: {
                     published_on: {
-                        lte: 'now'
+                        lte: today
                     }
                 },
                 sort: '-published_on'
