@@ -1,7 +1,10 @@
 <template>
     <div class="hero is-fullheight">
-        <navigation class="hero-head"></navigation>
-        <main class="hero-body">
+        <navigation class="hero-head"
+            @toggle-proofread-mode="toggleProofreadMode()">
+        </navigation>
+        <main class="hero-body"
+            :class="{ proofread: isProofreadMode }">
             <router-view></router-view>
         </main>
     </div>
@@ -48,7 +51,8 @@ export default {
         cdnUrl: process.env.VUE_APP_CDN_URL,
         cmsUrl: process.env.VUE_APP_CMS_URL,
         collection: process.env.VUE_APP_CMS_PROJECT_COLLECTION,
-        project: process.env.VUE_APP_CMS_PROJECT
+        project: process.env.VUE_APP_CMS_PROJECT,
+        isProofreadMode: false
     }),
     async created () {
         await this.getPostList()
@@ -75,6 +79,9 @@ export default {
                     let postList = this._buildTitleMap(posts.data)
                     this.$store.commit('setPostList', postList)
                 })
+        },
+        toggleProofreadMode () {
+            this.isProofreadMode = !this.isProofreadMode
         },
         _buildTitleMap (posts) {
             let slugOptions = {
@@ -108,7 +115,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap');
+
 .hero-body {
     padding: 3.25rem 0 0;
+}
+
+.hero-body.proofread  {
+    font-family: 'Baloo 2', cursive;
 }
 </style>

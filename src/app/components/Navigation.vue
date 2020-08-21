@@ -7,10 +7,29 @@
                         <img id="logo" src="/assets/images/logo.png" alt="Marvin Isaac Logo">
                     </a>
                 </div>
+                <div class="navbar-menu"
+                    v-if="is.local">
+                    <div class="navbar-end">
+                        <a class="navbar-item"
+                            @click="$emit('toggle-proofread-mode')">
+                            Toggle Proofread
+                        </a>
+                    </div>
+                </div>
             </div>
         </nav>
     </div>
 </template>
+
+<script>
+export default {
+    data: () => ({
+        is: {
+            local: process.env.VUE_APP_ENVIRONMENT === 'LOCAL'
+        }
+    })
+}
+</script>
 
 <style lang="scss" scoped>
 .container-navigation {
