@@ -14,7 +14,6 @@
 <script>
 import slugify from 'slugify'
 import Navigation from './components/Navigation.vue'
-import moment from 'moment'
 import CustomFooter from './components/Footer.vue'
 
 export default {
@@ -62,7 +61,6 @@ export default {
     },
     methods: {
         async getPostList () {
-            const today = moment().format('YYYY-MM-DD 00:00:00')
             const options = {
                 fields: [
                     'id',
@@ -70,11 +68,6 @@ export default {
                     'featured_image.filename_disk',
                     'blurb'
                 ],
-                filter: {
-                    published_on: {
-                        lte: today
-                    }
-                },
                 sort: '-published_on'
             }
             return this.$cms.getItems(this.collection, options)
