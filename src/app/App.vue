@@ -7,6 +7,7 @@
             :class="{ proofread: isProofreadMode }">
             <router-view></router-view>
         </main>
+        <custom-footer class="hero-footer"></custom-footer>
     </div>
 </template>
 
@@ -14,6 +15,7 @@
 import slugify from 'slugify'
 import Navigation from './components/Navigation.vue'
 import moment from 'moment'
+import CustomFooter from './components/Footer.vue'
 
 export default {
     metaInfo: {
@@ -44,7 +46,8 @@ export default {
         ]
     },
     components: {
-        Navigation
+        Navigation,
+        CustomFooter
     },
     data: () => ({
         api: undefined,
