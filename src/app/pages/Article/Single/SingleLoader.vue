@@ -204,6 +204,7 @@ $dark-grey: #dbdbdb;
         padding: 1.5rem;
 
         .post-body {
+            margin: 0 auto;
             max-width: 720px;
 
             .title {
@@ -254,6 +255,10 @@ $dark-grey: #dbdbdb;
                         background-color: $dark-grey;
                     }
 
+                    h2 {
+                        text-decoration: underline;
+                    }
+
                     h3 {
                         font-weight: normal;
                     }
@@ -267,10 +272,7 @@ $dark-grey: #dbdbdb;
 
                     p {
                         code {
-                            background: $solarized-light;
-                            border: 1px solid darken($solarized-light, 10%);
                             border-radius: 3px;
-                            color: black;
                             padding: 0 0.25em;
                         }
                     }
