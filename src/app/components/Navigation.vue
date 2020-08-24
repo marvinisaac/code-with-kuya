@@ -6,6 +6,15 @@
                     <a class="navbar-item has-text-weight" href="/">
                         <img id="logo" src="/assets/images/logo.png" alt="Marvin Isaac Logo">
                     </a>
+                    <div class="navbar-item">
+                        <div class="fb-like"
+                            data-action="like"
+                            data-href="https://www.facebook.com/codewithkuyamarvin"
+                            data-layout="button_count"
+                            data-share="false"
+                            data-size="large">
+                        </div>
+                    </div>
                 </div>
                 <div class="navbar-menu"
                     v-if="is.local">
@@ -46,12 +55,19 @@ export default {
 
             .navbar-brand {
                 margin-left: 0;
-
-                .navbar-item {
-                    padding: 0.5rem 0;
-                }
             }
         }
     }
 }
+
+@media (max-width: 1023px) {
+.container-navigation {
+    .navbar {
+        .container {
+            .navbar-brand {
+                justify-content: space-between;
+            }
+        }
+    }
+}}
 </style>

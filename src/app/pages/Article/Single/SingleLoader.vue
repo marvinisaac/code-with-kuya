@@ -29,6 +29,11 @@
                 <div class="content"
                     v-html="post.body">
                 </div>
+
+                <div class="fb-comments"
+                    data-numposts="5"
+                    :data-href="post.fb_url">
+                </div>
             </div>
         </div>
     </div>
@@ -121,7 +126,8 @@ export default {
                     'body',
                     'published_on',
                     'modified_on',
-                    'blurb'
+                    'blurb',
+                    'facebook_post_url'
                 ],
                 filter: {
                     id: this.postId
@@ -136,6 +142,7 @@ export default {
                     this.post.published_on = moment(post.published_on).format('YYYY MMM DD')
                     this.post.modified_on = moment(post.modified_on).format('YYYY MMM DD')
                     this.post.featuredImage = this.featuredImage
+                    this.post.fb_url = post.facebook_post_url
                 })
         },
         async _formatBody (body) {
