@@ -26,10 +26,7 @@
                     v-html="post.body">
                 </div>
 
-                <div class="fb-comments"
-                    data-numposts="5"
-                    :data-href="post.fb_url">
-                </div>
+                <about></about>
             </div>
         </div>
     </div>
@@ -41,6 +38,7 @@ import marked from 'marked'
 import highlighter from 'highlight.js'
 import moment from 'moment'
 import slugify from 'slugify'
+import About from './../About.vue'
 
 export default {
     metaInfo () {
@@ -80,7 +78,8 @@ export default {
         }
     },
     components: {
-        Loading
+        Loading,
+        About
     },
     props: {
         postId: Number,
