@@ -16,10 +16,6 @@
                 <p class="subtitle">
                     {{ post.blurb }}
                     <br/>
-                    <span class="is-size-7"
-                        v-if="isUpdated">
-                        Updated: {{ post.modified_on }}
-                    </span>
 
                     <span class="is-size-7">
                         Published: {{ post.published_on }}
@@ -100,9 +96,6 @@ export default {
         project: process.env.VUE_APP_CMS_PROJECT
     }),
     computed: {
-        isUpdated () {
-            return moment(this.post.modified_on, 'YYYY MMM DD') > moment(this.post.published_on, 'YYYY MMM DD')
-        },
         featuredImage () {
             let post = this.post
             if (post.featured_image === null) {
@@ -119,16 +112,6 @@ export default {
     methods: {
         async getPost () {
             const options = {
-                fields: [
-                    'id',
-                    'title',
-                    'featured_image.filename_disk',
-                    'body',
-                    'published_on',
-                    'modified_on',
-                    'blurb',
-                    'facebook_post_url'
-                ],
                 filter: {
                     id: this.postId
                 }
@@ -140,7 +123,6 @@ export default {
                     this.post = post
                     this.post.body = body
                     this.post.published_on = moment(post.published_on).format('YYYY MMM DD')
-                    this.post.modified_on = moment(post.modified_on).format('YYYY MMM DD')
                     this.post.featuredImage = this.featuredImage
                     this.post.fb_url = post.facebook_post_url
                 })
@@ -208,11 +190,12 @@ $dark-grey: #dbdbdb;
     }
 
     .container {
-        padding: 1.5rem;
+        padding: 0 1.5rem;
 
         .post-body {
             margin: 0 auto;
             max-width: 720px;
+            padding: 1.5rem 0;
 
             .title {
                 line-height: 1.25em;
